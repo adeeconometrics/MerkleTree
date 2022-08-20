@@ -1,40 +1,52 @@
 #ifndef __MERKLETREE_H__
 #define __MERKLETREE_H__
 
+#include "MerkleNode.h"
 #include "SHA256.h"
+
+
 #include <memory>
+#include <string>
+#include <vector>
+
 
 // Concrete Implementation of Merkle Tree
 
-struct Node final {
-    Node *left = nullptr;
-    Node *right = nullptr;
-    int key {};
-    int value{};
-};
-
 class MerkleTree final {
+public:
+  typedef std::vector<MerkleNode> MerkleTreeLevel;
 
 public:
-    MerkleTree();
-    ~MerkleTree();
+  MerkleTree();
+  ~MerkleTree();
 
-    auto add_node(const Node* node) -> void;
-    auto remove_node(const Node* node) -> void;
-    auto find(const std::unique_ptr<Node>& node) -> std::unique_ptr<Node>;
+  auto add_node(const MerkleNode *node) -> void;
+  auto remove_node(const MerkleNode *node) -> void;
+  auto find(const std::unique_ptr<MerkleNode> &node)
+      -> std::unique_ptr<MerkleNode>;
 
-    auto inorder() const noexcept -> void;
-    auto preorder() const noexcept -> void;
-    auto postorder() const noexcept -> void;
+  auto
+  construct_network_ordered_hex_seeds(const std::vector<std::string> &leaves)
+      -> void;
+  auto compute_subtree(std::unique_ptr<MerkleNode> &node) -> void;
 
-    auto size() const noexcept -> size_t;
+  auto display() const noexcept -> void;
 
-private:    
-    size_t m_size {};
-    Node* head {};
+  auto size() const noexcept -> size_t;
+  auto is_element(const std::unique_ptr<MerkleNode> &node) const noexcept
+      -> bool;
 
-private: 
-    auto hash() -> int;
+private:
+  std::vector<MerkleNode> m_leafs;
+  std::vector<MerkleTreeLevel> m_tree_levels;
+
+  MerkleNode *m_head{nullptr};
+  MerkleNode *m_root{nullptr};
+
+  size_t m_size{};
+
+private:
+  auto hash() -> int;
 };
 
 #endif // __MERKLETREE_H__
