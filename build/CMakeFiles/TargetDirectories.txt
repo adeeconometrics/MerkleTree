@@ -1,0 +1,3 @@
+/mnt/c/Users/amianadave/Documents/CppShorts/MerkleTree/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/amianadave/Documents/CppShorts/MerkleTree/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/amianadave/Documents/CppShorts/MerkleTree/build/CMakeFiles/MerkleTree.dir
