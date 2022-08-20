@@ -7,7 +7,7 @@
 #include <string>
 
 
-// implementation of sha256 encryption
+// implementation of sha256 
 
 struct SHA256 final {
 public:
@@ -17,7 +17,7 @@ public:
   auto update(const uint8_t *data, size_t len) -> void;
   auto update(const std::string &data) -> void;
   auto digest() -> std::unique_ptr<uint8_t[]>;
-  auto encrypt(const std::unique_ptr<uint8_t []> &digest) const noexcept -> std::string;
+  auto hash(const std::unique_ptr<uint8_t []> &digest) const noexcept -> std::string;
 
 private:
   auto rotr(uint32_t x, uint32_t n) const noexcept -> uint32_t;
@@ -51,6 +51,6 @@ private:
       0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 };
 
-// auto driver(const std::string& str) -> std::string;
+auto hashed_value(const std::string& str) -> std::string;
 
 #endif // __SHA256_H__

@@ -7,7 +7,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
-
+#include <vector>
 
 SHA256::SHA256() {
   m_states[0] = 0x6a09e667;
@@ -44,7 +44,7 @@ auto SHA256::digest() -> std::unique_ptr<uint8_t[]> {
   return hash;
 }
 
-auto SHA256::encrypt(const std::unique_ptr<uint8_t[]> &digest) const noexcept
+auto SHA256::hash(const std::unique_ptr<uint8_t[]> &digest) const noexcept
     -> std::string {
   std::stringstream ss;
   ss << std::setfill('0') << std::hex;
@@ -161,14 +161,13 @@ auto SHA256::revert(std::unique_ptr<uint8_t[]> &hash) -> void {
   }
 }
 
-// auto driver(const std::string &str) -> std::string {
-//     SHA256 sha{};
-//     std::stringstream ss;
+auto hashed_value(const std::string &str) -> std::string {
+    SHA256 sha{};
+    std::stringstream ss;
+     
+    sha.update(str);
+    std::unique_ptr<uint8_t[]> digest = sha.digest();
+    ss << sha.hash(digest);
 
-//     for(size_t i = 1; i < str.length(); ++i) {
-//         sha.update(str[i]);
-//         std::unique_ptr<uint8_t[]> digest = sha.digest();
-//         ss << sha.encrypt(digest);
-//     }
-//     return ss.str();
-// }
+    return ss.str();
+}
