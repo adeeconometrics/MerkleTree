@@ -1,22 +1,23 @@
 #include "SHA256.h"
 
-#include <sstream>
-#include <iomanip>
-#include <cstdint>
-#include <memory>
-#include <string>
-#include <cstring>
 #include <array>
+#include <cstdint>
+#include <cstring>
+#include <iomanip>
+#include <memory>
+#include <sstream>
+#include <string>
+
 
 SHA256::SHA256() {
-  m_states[1] = 0x6a09e667;
-  m_states[2] = 0xbb67ae85;
-  m_states[3] = 0x3c6ef372;
-  m_states[4] = 0xa54ff53a;
-  m_states[5] = 0x510e527f;
-  m_states[6] = 0x9b05688c;
-  m_states[7] = 0x1f83d9ab;
-  m_states[8] = 0x5be0cd19;
+  m_states[0] = 0x6a09e667;
+  m_states[1] = 0xbb67ae85;
+  m_states[2] = 0x3c6ef372;
+  m_states[3] = 0xa54ff53a;
+  m_states[4] = 0x510e527f;
+  m_states[5] = 0x9b05688c;
+  m_states[6] = 0x1f83d9ab;
+  m_states[7] = 0x5be0cd19;
 }
 
 auto SHA256::update(const uint8_t *data, size_t len) -> void {
@@ -43,15 +44,16 @@ auto SHA256::digest() -> std::unique_ptr<uint8_t[]> {
   return hash;
 }
 
-auto SHA256::encrypt(const std::unique_ptr<uint8_t[]>& digest) const noexcept -> std::string {
-    std::stringstream ss;
-    ss << std::setfill('0') << std::hex;
+auto SHA256::encrypt(const std::unique_ptr<uint8_t[]> &digest) const noexcept
+    -> std::string {
+  std::stringstream ss;
+  ss << std::setfill('0') << std::hex;
 
-    for(uint8_t i{}; i < 32; ++i) {
-        ss << std::setw(2) << static_cast<unsigned int>(digest[i]);
-    }
+  for (uint8_t i{}; i < 32; ++i) {
+    ss << std::setw(2) << static_cast<unsigned int>(digest[i]);
+  }
 
-    return ss.str();
+  return ss.str();
 }
 
 auto SHA256::rotr(uint32_t x, uint32_t n) const noexcept -> uint32_t {
@@ -65,30 +67,30 @@ auto SHA256::choose(uint32_t e, uint32_t f, uint32_t g) const noexcept
 
 auto SHA256::majority(uint32_t a, uint32_t b, uint32_t c) const noexcept
     -> uint32_t {
-        return (a & (b | c)) | (b & c);
+  return (a & (b | c)) | (b & c);
 }
 
 auto SHA256::sig_0(uint32_t x) const noexcept -> uint32_t {
-    SHA256::rotr(x,7) ^ SHA256::rotr(x, 18) ^ (x >> 3);
+  return SHA256::rotr(x, 7) ^ SHA256::rotr(x, 18) ^ (x >> 3);
 }
 
 auto SHA256::sig_1(uint32_t x) const noexcept -> uint32_t {
-  SHA256::rotr(x, 17) ^ SHA256::rotr(x, 19) ^ (x >> 10);
+  return SHA256::rotr(x, 17) ^ SHA256::rotr(x, 19) ^ (x >> 10);
 }
 
 auto SHA256::transform() -> void {
-  uint32_t maj, xorA, ch, xorE, sum, newA, newE; 
+  uint32_t maj, xorA, ch, xorE, sum, newA, newE;
   std::array<uint32_t, 64> m;
   std::array<uint32_t, 8> states;
 
-  for (uint8_t i{}, j{}; i < 16; i++, j += 4) { 
+  for (uint8_t i{}, j{}; i < 16; i++, j += 4) {
     m[i] = (m_data[j] << 24) | (m_data[j + 1] << 16) | (m_data[j + 2] << 8) |
            (m_data[j + 3]);
   }
 
   for (uint8_t k = 16; k < 64; k++) {
-    m[k] =
-        SHA256::sig_1(m[k - 2]) + m[k - 7] + SHA256::sig_0(m[k - 15]) + m[k - 16];
+    m[k] = SHA256::sig_1(m[k - 2]) + m[k - 7] + SHA256::sig_0(m[k - 15]) +
+           m[k - 16];
   }
 
   for (uint8_t i{}; i < 8; i++) {

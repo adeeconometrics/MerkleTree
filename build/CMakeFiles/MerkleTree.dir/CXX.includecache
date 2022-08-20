@@ -16,11 +16,21 @@ memory
 string
 -
 
-/mnt/c/Users/amianadave/Documents/CppShorts/MerkleTree/src/main.cpp
+/mnt/c/Users/amianadave/Documents/CppShorts/MerkleTree/src/SHA256.cpp
 SHA256.h
 /mnt/c/Users/amianadave/Documents/CppShorts/MerkleTree/src/SHA256.h
-iostream
+array
+-
+cstdint
+-
+cstring
+-
+iomanip
+-
+memory
 -
 sstream
+-
+string
 -
 
