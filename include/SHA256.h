@@ -1,13 +1,16 @@
 #ifndef __SHA256_H__
 #define __SHA256_H__
 
+/**
+ * @brief implementation of sha256. Design specification obtained at: 
+ *        https://en.bitcoinwiki.org/wiki/SHA-2
+ */
+
 #include <array>
 #include <cstdint>
 #include <memory>
 #include <string>
 
-
-// implementation of sha256 
 
 struct SHA256 final {
 public:
