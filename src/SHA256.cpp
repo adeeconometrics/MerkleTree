@@ -188,6 +188,7 @@ auto SHA256::revert(std::unique_ptr<uint8_t[]> &hash) -> void {
   }
 }
 
+// change to to_hex and to_string
 auto digest_to_string(const std::string &str) -> std::string {
   SHA256 sha{};
 
