@@ -197,6 +197,7 @@ auto digest_to_string(const std::string &str) -> std::string {
   return sha.to_string(digest);
 }
 
+// change to to_hex and to_string test comment
 auto digest_to_vstring(const std::vector<std::string> &str)
     -> std::vector<std::string> {
   SHA256 sha{};
