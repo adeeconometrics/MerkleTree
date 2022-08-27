@@ -190,7 +190,7 @@ auto to_string(const std::vector<uint8_t> &digest) noexcept
   ss << std::setfill('0') << std::hex;
 
   for (auto i: digest) {
-    ss << std::setw(2) << static_cast<unsigned int>(i);
+    ss << static_cast<uint8_t>(i);
   }
 
   return ss.str();
@@ -201,6 +201,6 @@ auto to_hex(const std::string& str) noexcept -> std::vector<uint8_t> {
   result.reserve(str.size());
 
   for(auto &i:str)
-      result.push_back(static_cast<uint8_t>(i));
+      result.emplace_back(static_cast<uint8_t>(i));
   return result;
 }
