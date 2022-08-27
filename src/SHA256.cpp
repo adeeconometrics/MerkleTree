@@ -1,4 +1,4 @@
-#include "SHA256.h"
+#include "SHA256.hpp"
 
 #include <array>
 #include <cstdint>
@@ -32,6 +32,13 @@ SHA256::SHA256() {
   m_states[6] = 0x1f83d9ab;
   m_states[7] = 0x5be0cd19;
 }
+// could return const
+auto SHA256::operator()(const std::string& data) -> std::vector<uint8_t> {
+  SHA256::update(data);
+  const auto hashed = SHA256::digest();
+  SHA256::reset();
+  return hashed;
+}
 
 auto SHA256::update(const uint8_t *data, size_t len) -> void {
   for (size_t i = 0; i < len; i++) {
@@ -50,23 +57,11 @@ auto SHA256::update(const std::string &data) -> void {
   update(reinterpret_cast<const uint8_t *>(data.c_str()), data.size());
 }
 
-auto SHA256::digest() -> std::unique_ptr<uint8_t[]> {
-  auto hash = std::make_unique<uint8_t[]>(32);
+auto SHA256::digest() -> std::vector<uint8_t> {
+  auto hash = std::vector<uint8_t>(32);
   pad();
   revert(hash);
   return hash;
-}
-
-auto SHA256::to_string(const std::unique_ptr<uint8_t[]> &digest) const noexcept
-    -> std::string {
-  std::stringstream ss;
-  ss << std::setfill('0') << std::hex;
-
-  for (uint8_t i{}; i < 32; ++i) {
-    ss << std::setw(2) << static_cast<unsigned int>(digest[i]);
-  }
-
-  return ss.str();
 }
 
 auto SHA256::reset() -> void {
@@ -180,7 +175,7 @@ auto SHA256::pad() -> void {
   SHA256::transform();
 }
 
-auto SHA256::revert(std::unique_ptr<uint8_t[]> &hash) -> void {
+auto SHA256::revert(std::vector<uint8_t> &hash) -> void {
   for (uint8_t i{}; i < 4; i++) {
     for (uint8_t j{}; j < 8; j++) {
       hash[i + (j * 4)] = (m_states[j] >> (24 - i * 8)) & 0x000000ff;
@@ -188,27 +183,24 @@ auto SHA256::revert(std::unique_ptr<uint8_t[]> &hash) -> void {
   }
 }
 
-// change to to_hex and to_string
-auto digest_to_string(const std::string &str) -> std::string {
-  SHA256 sha{};
 
-  sha.update(str);
-  std::unique_ptr<uint8_t[]> digest = sha.digest();
-  return sha.to_string(digest);
-}
+auto to_string(const std::vector<uint8_t> &digest) noexcept
+    -> std::string {
+  std::stringstream ss;
+  ss << std::setfill('0') << std::hex;
 
-// change to to_hex and to_string test comment
-auto digest_to_vstring(const std::vector<std::string> &str)
-    -> std::vector<std::string> {
-  SHA256 sha{};
-  std::vector<std::string> result(str.size());
-
-  for (auto i : str) {
-    sha.update(i);
-    auto digest = sha.digest();
-    result.push_back(sha.to_string(digest));
-    sha.reset();
+  for (auto i: digest) {
+    ss << std::setw(2) << static_cast<unsigned int>(i);
   }
 
+  return ss.str();
+}
+
+auto to_hex(const std::string& str) noexcept -> std::vector<uint8_t> {
+  std::vector<uint8_t> result;
+  result.reserve(str.size());
+
+  for(auto &i:str)
+      result.push_back(static_cast<uint8_t>(i));
   return result;
 }

@@ -1,8 +1,8 @@
 #ifndef __MERKLETREE_H__
 #define __MERKLETREE_H__
 
-#include "MerkleNode.h"
-#include "SHA256.h"
+#include "MerkleNode.hpp"
+#include "SHA256.hpp"
 
 
 #include <memory>

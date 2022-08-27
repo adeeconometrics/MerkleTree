@@ -8,7 +8,6 @@
 
 #include <array>
 #include <cstdint>
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -22,12 +21,13 @@ public:
   auto operator=(const SHA256 &) -> SHA256 & = delete;
   auto operator=(SHA256 &&) -> SHA256 & = delete;
 
+public:
+  auto operator()(const std::string& data) -> std::vector<uint8_t>;
+
+private:
   auto update(const uint8_t *data, size_t len) -> void;
   auto update(const std::string &data) -> void;
-  auto digest() -> std::unique_ptr<uint8_t[]>;
-  auto to_string(const std::unique_ptr<uint8_t[]> &digest) const noexcept
-      -> std::string;
-
+  auto digest() -> std::vector<uint8_t>;
   auto reset() -> void;
 
 private:
@@ -39,7 +39,7 @@ private:
 
   auto transform() -> void;
   auto pad() -> void;
-  auto revert(std::unique_ptr<uint8_t[]> &hash) -> void;
+  auto revert(std::vector<uint8_t> &hash) -> void;
 
 private:
   std::array<uint8_t, 64> m_data{};
@@ -51,8 +51,9 @@ private:
   static const std::array<uint32_t, 64> m_k;
 };
 
-auto digest_to_string(const std::string &str) -> std::string;
-auto digest_to_vstring(const std::vector<std::string> &str)
-    -> std::vector<std::string>;
+auto to_string(const std::vector<uint8_t> &digest) noexcept
+    -> std::string;
+
+auto to_hex(const std::string& str) noexcept -> std::vector<uint8_t>;
 
 #endif // __SHA256_H__

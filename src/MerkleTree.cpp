@@ -1,3 +1,3 @@
-#include "MerkleTree.h"
+#include "MerkleTree.hpp"
 
 
