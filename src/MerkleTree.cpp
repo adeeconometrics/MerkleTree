@@ -28,6 +28,7 @@ auto MerkleTree::levels() const noexcept -> std::vector<std::vector<MerkleNode>>
 auto MerkleTree::derive_parent(const std::string& lhs, const std::string rhs) -> std::string {
     auto concat = combine(lhs, rhs);
     // reverse(H(H(reverse(rhs)+reverse(lhs))))
+    // test
     return to_string(MerkleTree::m_sha256(to_string(MerkleTree::m_sha256(concat))));
 }
 
