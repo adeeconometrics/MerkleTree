@@ -36,6 +36,11 @@ auto combine(const std::vector<uint8_t>& lhs,
     return _concat;
 }
 
+auto reverse(const std::string& str) -> std::string {
+  return {str.crbegin(), str.crend()};
+}
+
+
 auto combine(std::string lhs,
             std::string rhs) ->std::string {
   std::reverse(lhs.begin(), lhs.end());
