@@ -203,6 +203,8 @@ CMakeFiles/MerkleTree.dir/src/main.cpp.o: \
  /home/ddamiana/Documents/CodeProjects/Cpp/MerkleTree/src/../include/SHA256.hpp \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
- /usr/include/c++/11/bits/vector.tcc /usr/include/c++/11/iostream \
- /usr/include/c++/11/istream /usr/include/c++/11/bits/istream.tcc \
- /usr/include/c++/11/sstream /usr/include/c++/11/bits/sstream.tcc
+ /usr/include/c++/11/bits/vector.tcc \
+ /home/ddamiana/Documents/CodeProjects/Cpp/MerkleTree/src/../include/SHA256.hpp \
+ /usr/include/c++/11/iostream /usr/include/c++/11/istream \
+ /usr/include/c++/11/bits/istream.tcc /usr/include/c++/11/sstream \
+ /usr/include/c++/11/bits/sstream.tcc
