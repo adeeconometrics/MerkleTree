@@ -73,3 +73,7 @@ auto MerkleTree::display_subtree(MerkleNode *node, size_t level) -> void {
     display_subtree(node->right(), level + 1);
   return;
 }
+
+auto operator==(const MerkleTree& lhs, const MerkleTree& rhs) -> bool {
+  return lhs.root() == rhs.root();
+}

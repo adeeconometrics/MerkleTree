@@ -11,9 +11,17 @@
 
 class MerkleTree final {
 public:
+  MerkleTree(const MerkleTree&) = delete;
+  MerkleTree(MerkleTree&&) = delete;
+
   MerkleTree(const std::vector<std::string> &leafs);
   ~MerkleTree() = default;
 
+  auto operator=(const MerkleTree&) -> MerkleTree& = delete;
+  auto operator=(MerkleTree&&) -> MerkleTree& = delete;
+
+
+public:
   auto display() -> void;
 
   auto root() const noexcept -> std::string;
@@ -32,4 +40,7 @@ private:
   SHA256 m_sha256;
   MerkleNode *m_root{nullptr};
 };
+
+auto operator==(const MerkleTree& lhs, const MerkleTree& rhs) -> bool;
+
 #endif // __MERKLETREE_H__
