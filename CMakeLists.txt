@@ -1,8 +1,10 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.22)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic")
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(
 	"MerkleTree"
@@ -10,6 +12,7 @@ project(
 	DESCRIPTION "Generic Implementation of Merkle Tree"
 	LANGUAGES CXX
 )
+
 
 file(GLOB_RECURSE SRC src/*.cpp)
 include_directories(include)

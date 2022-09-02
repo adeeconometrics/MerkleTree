@@ -101,22 +101,22 @@ auto SHA256::sig_1(uint32_t x) const noexcept -> uint32_t {
 }
 
 auto SHA256::transform() -> void {
-  uint32_t maj, xorA, ch, xorE, sum, newA, newE;
-  std::array<uint32_t, 64> m;
-  std::array<uint32_t, 8> states;
+  uint32_t maj{}, xorA{}, ch{}, xorE{}, sum{}, newA{}, newE{};
+  std::array<uint32_t, 64> m{};
+  std::array<uint32_t, 8> states{};
 
   for (uint8_t i{}, j{}; i < 16; i++, j += 4) {
-    m[i] = (m_data[j] << 24) | (m_data[j + 1] << 16) | (m_data[j + 2] << 8) |
-           (m_data[j + 3]);
+    m.at(i) = (m_data.at(j) << 24) | (m_data[j + 1] << 16) |
+              (m_data[j + 2] << 8) | (m_data[j + 3]);
   }
 
   for (uint8_t k = 16; k < 64; k++) {
-    m[k] = SHA256::sig_1(m[k - 2]) + m[k - 7] + SHA256::sig_0(m[k - 15]) +
-           m[k - 16];
+    m.at(k) = SHA256::sig_1(m[k - 2]) + m[k - 7] + SHA256::sig_0(m[k - 15]) +
+              m[k - 16];
   }
 
   for (uint8_t i{}; i < 8; i++) {
-    states[i] = m_states[i];
+    states.at(i) = m_states.at(i);
   }
 
   for (uint8_t i{}; i < 64; i++) {
@@ -129,7 +129,7 @@ auto SHA256::transform() -> void {
     xorE = SHA256::rotr(states[4], 6) ^ SHA256::rotr(states[4], 11) ^
            SHA256::rotr(states[4], 25);
 
-    sum = m[i] + SHA256::m_k[i] + states[7] + ch + xorE;
+    sum = m.at(i) + SHA256::m_k.at(i) + states[7] + ch + xorE;
     newA = xorA + maj + sum;
     newE = states[3] + sum;
 
@@ -144,7 +144,7 @@ auto SHA256::transform() -> void {
   }
 
   for (uint8_t i{}; i < 8; i++) {
-    m_states[i] += states[i];
+    m_states.at(i) += states.at(i);
   }
 }
 
@@ -152,9 +152,9 @@ auto SHA256::pad() -> void {
   uint64_t i = m_blocklen;
   uint8_t end = m_blocklen < 56 ? 56 : 64;
 
-  m_data[i++] = 0x80; // Append a bit 1
+  m_data.at(i++) = 0x80; // Append a bit 1
   while (i < end) {
-    m_data[i++] = 0x00; // Pad with zeros
+    m_data.at(i++) = 0x00; // Pad with zeros
   }
 
   if (m_blocklen >= 56) {
@@ -178,7 +178,7 @@ auto SHA256::pad() -> void {
 auto SHA256::revert(std::vector<uint8_t> &hash) -> void {
   for (uint8_t i{}; i < 4; i++) {
     for (uint8_t j{}; j < 8; j++) {
-      hash[i + (j * 4)] = (m_states[j] >> (24 - i * 8)) & 0x000000ff;
+      hash[i + (j * 4)] = (m_states.at(j) >> (24 - i * 8)) & 0x000000ff;
     }
   }
 }
