@@ -1,4 +1,4 @@
-# Install script for directory: /home/ddamiana/Documents/CodeProjects/MerkleTree
+# Install script for directory: /home/ddamiana/Documents/CodeProjects/Cpp/MerkleTree
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ddamiana/Documents/CodeProjects/MerkleTree/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ddamiana/Documents/CodeProjects/Cpp/MerkleTree/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

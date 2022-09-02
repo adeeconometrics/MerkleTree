@@ -4,11 +4,10 @@
 #include <memory>
 #include <string>
 
-
 class MerkleNode final {
 public:
   MerkleNode(std::string hex);
-  MerkleNode(std::string hex, MerkleNode* lhs, MerkleNode* rhs);
+  MerkleNode(std::string hex, MerkleNode *lhs, MerkleNode *rhs);
 
   // MerkleNode(const MerkleNode&) = delete;
   // MerkleNode(MerkleNode&&) = delete;
@@ -23,11 +22,12 @@ public:
   auto parent() const noexcept -> MerkleNode *;
 
 private:
+  std::string m_data;
+  
   MerkleNode *m_left = nullptr;
   MerkleNode *m_right = nullptr;
   MerkleNode *m_parent = nullptr;
 
-  std::string m_data;
 };
 
 #endif // __MERKLENODE_H__

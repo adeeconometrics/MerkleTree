@@ -1,4 +1,4 @@
-#include "SHA256.hpp"
+#include "../include/SHA256.hpp"
 
 #include <array>
 #include <cstdint>
@@ -33,7 +33,7 @@ SHA256::SHA256() {
   m_states[7] = 0x5be0cd19;
 }
 // could return const
-auto SHA256::operator()(const std::string& data) -> std::vector<uint8_t> {
+auto SHA256::operator()(const std::string &data) -> std::vector<uint8_t> {
   SHA256::update(data);
   const auto hashed = SHA256::digest();
   SHA256::reset();
@@ -183,24 +183,22 @@ auto SHA256::revert(std::vector<uint8_t> &hash) -> void {
   }
 }
 
-
-auto to_string(const std::vector<uint8_t> &digest) noexcept
-    -> std::string {
+auto to_string(const std::vector<uint8_t> &digest) noexcept -> std::string {
   std::stringstream ss;
   ss << std::setfill('0') << std::hex;
 
-  for (auto i: digest) {
+  for (auto i : digest) {
     ss << static_cast<unsigned int>(i);
   }
 
   return ss.str();
 }
 
-auto to_hex(const std::string& str) noexcept -> std::vector<uint8_t> {
+auto to_hex(const std::string &str) noexcept -> std::vector<uint8_t> {
   std::vector<uint8_t> result;
   result.reserve(str.size());
 
-  for(auto &i:str)
-      result.emplace_back(static_cast<uint8_t>(i));
+  for (auto &i : str)
+    result.emplace_back(static_cast<uint8_t>(i));
   return result;
 }

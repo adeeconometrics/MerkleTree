@@ -22,7 +22,7 @@ public:
   auto operator=(SHA256 &&) -> SHA256 & = delete;
 
 public:
-  auto operator()(const std::string& data) -> std::vector<uint8_t>;
+  auto operator()(const std::string &data) -> std::vector<uint8_t>;
 
 private:
   auto update(const uint8_t *data, size_t len) -> void;
@@ -51,9 +51,8 @@ private:
   static const std::array<uint32_t, 64> m_k;
 };
 
-auto to_string(const std::vector<uint8_t> &digest) noexcept
-    -> std::string;
+auto to_string(const std::vector<uint8_t> &digest) noexcept -> std::string;
 
-auto to_hex(const std::string& str) noexcept -> std::vector<uint8_t>;
+auto to_hex(const std::string &str) noexcept -> std::vector<uint8_t>;
 
 #endif // __SHA256_H__
