@@ -1,3 +1,0 @@
-/root/Documents/CodeProjects/Cpp/MerkleTree/build/CMakeFiles/rebuild_cache.dir
-/root/Documents/CodeProjects/Cpp/MerkleTree/build/CMakeFiles/edit_cache.dir
-/root/Documents/CodeProjects/Cpp/MerkleTree/build/CMakeFiles/MerkleTree.dir

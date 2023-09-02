@@ -1,1 +1,0 @@
-/bin/c++  -Wall -Wextra -pedantic   CMakeFiles/MerkleTree.dir/src/MerkleNode.cpp.o CMakeFiles/MerkleTree.dir/src/MerkleTree.cpp.o CMakeFiles/MerkleTree.dir/src/SHA256.cpp.o CMakeFiles/MerkleTree.dir/src/main.cpp.o  -o MerkleTree 
