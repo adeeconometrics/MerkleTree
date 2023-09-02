@@ -24,9 +24,14 @@ auto MerkleTree::levels() const noexcept
 
 auto MerkleTree::derive_parent(const std::string &lhs, const std::string rhs)
     -> std::string {
-  // auto concat = combine(lhs, rhs);
-  // reverse(H(H(reverse(rhs)+reverse(lhs))))
-  return to_string(MerkleTree::m_sha256(lhs + rhs));
+
+  std::string concat = combine(lhs, rhs);
+  std::vector<uint8_t> inner =
+      MerkleTree::m_sha256(combine(reverse(rhs), reverse(lhs)));
+  std::vector<uint8_t> outer = MerkleTree::m_sha256(inner);
+
+  std::string result{outer.begin(), outer.end()};
+  return reverse(result);
 }
 
 auto MerkleTree::construct() -> void {
@@ -74,6 +79,6 @@ auto MerkleTree::display_subtree(MerkleNode *node, size_t level) -> void {
   return;
 }
 
-auto operator==(const MerkleTree& lhs, const MerkleTree& rhs) -> bool {
+auto operator==(const MerkleTree &lhs, const MerkleTree &rhs) -> bool {
   return lhs.root() == rhs.root();
 }

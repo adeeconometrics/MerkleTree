@@ -23,6 +23,7 @@ public:
 
 public:
   auto operator()(const std::string &data) -> std::vector<uint8_t>;
+  auto operator()(const std::vector<uint8_t> &data) -> std::vector<uint8_t>;
 
 private:
   auto update(const uint8_t *data, size_t len) -> void;

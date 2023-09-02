@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <iomanip>
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -21,17 +22,14 @@ template <typename T> auto reverse(const std::vector<T> &v) -> std::vector<T> {
 
 auto combine(const std::vector<uint8_t> &lhs, const std::vector<uint8_t> &rhs)
     -> const std::vector<uint8_t> {
-  std::vector<uint8_t> _concat;
-  _concat.reserve(lhs.size() + rhs.size());
 
-  auto reversed_lhs = reverse(lhs);
-  auto reversed_rhs = reverse(rhs);
+  std::vector<uint8_t> concat(lhs);
 
-  for (auto i : reversed_lhs)
-    _concat.emplace_back(i);
-  for (auto i : reversed_rhs)
-    _concat.emplace_back(i);
-  return _concat;
+  std::vector<uint8_t> reversed_lhs = reverse(lhs);
+  std::vector<uint8_t> reversed_rhs = reverse(rhs);
+
+  std::copy(rhs.cbegin(), rhs.cend(), std::back_inserter(concat));
+  return concat;
 }
 
 auto reverse(const std::string &str) -> std::string {

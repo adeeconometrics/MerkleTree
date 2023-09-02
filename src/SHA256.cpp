@@ -35,11 +35,18 @@ SHA256::SHA256() {
 // could return const
 auto SHA256::operator()(const std::string &data) -> std::vector<uint8_t> {
   SHA256::update(data);
-  const auto hashed = SHA256::digest();
+  const std::vector<uint8_t> hashed = SHA256::digest();
   SHA256::reset();
   return hashed;
 }
 
+auto SHA256::operator()(const std::vector<uint8_t> &data)
+    -> std::vector<uint8_t> {
+  SHA256::update(data.data(), data.size());
+  const std::vector<uint8_t> hashed = SHA256::digest();
+  SHA256::reset();
+  return hashed;
+}
 auto SHA256::update(const uint8_t *data, size_t len) -> void {
   for (size_t i = 0; i < len; i++) {
     m_data[m_blocklen++] = data[i];

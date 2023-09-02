@@ -11,15 +11,14 @@
 
 class MerkleTree final {
 public:
-  MerkleTree(const MerkleTree&) = delete;
-  MerkleTree(MerkleTree&&) = delete;
+  MerkleTree(const MerkleTree &) = delete;
+  MerkleTree(MerkleTree &&) = delete;
 
   MerkleTree(const std::vector<std::string> &leafs);
   ~MerkleTree() = default;
 
-  auto operator=(const MerkleTree&) -> MerkleTree& = delete;
-  auto operator=(MerkleTree&&) -> MerkleTree& = delete;
-
+  auto operator=(const MerkleTree &) -> MerkleTree & = delete;
+  auto operator=(MerkleTree &&) -> MerkleTree & = delete;
 
 public:
   auto display() -> void;
@@ -41,6 +40,6 @@ private:
   MerkleNode *m_root{nullptr};
 };
 
-auto operator==(const MerkleTree& lhs, const MerkleTree& rhs) -> bool;
+auto operator==(const MerkleTree &lhs, const MerkleTree &rhs) -> bool;
 
 #endif // __MERKLETREE_H__

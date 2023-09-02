@@ -23,11 +23,10 @@ public:
 
 private:
   std::string m_data;
-  
+
   MerkleNode *m_left = nullptr;
   MerkleNode *m_right = nullptr;
   MerkleNode *m_parent = nullptr;
-
 };
 
 #endif // __MERKLENODE_H__
