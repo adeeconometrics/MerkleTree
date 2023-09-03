@@ -1,3 +1,4 @@
 Checks: "clang-diagnostic-*,clang-analyzer-*,cppcoreguidelines-*,-extra-arg=-std=c++17, modernize-use-trailing-return-type"
+Checks: "-readability-magic-numbers"
 WarningsAsErrors: true
 AnalyzeTemporaryDtors: false
